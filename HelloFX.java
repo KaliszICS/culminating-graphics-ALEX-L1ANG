@@ -1,3 +1,10 @@
+/*
+File Name: Culminating Project
+Author: Alex Liang
+Date Created: June 1, 2026
+Date Last Modified: June 1, 2026
+*/
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
