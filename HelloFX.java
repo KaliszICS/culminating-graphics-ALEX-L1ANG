@@ -23,7 +23,9 @@ public class HelloFX extends Application {
         Label l = new Label("test");
         Scene scene = new Scene(new StackPane(l), 640, 480);
 
-        // Game Code
+        // Game Functions 
+        // Insert Game Function Here (Choose game)
+        // Insert Board Checker/Progress Function Here
         
         // Game Board
         char[][] gameBoard = {
