@@ -45,14 +45,14 @@ public class HelloFX extends Application {
             {' ', ' ', ' ', ' ', ' '}
         };
 
-        // Hints
+        // Hints Across Testing
         System.out.println("Across");
         System.out.println("American tennis player Coco, winner of the 2025 French Open");
         System.out.println("No later than");
         System.out.println("Prizefighter's quest");
         System.out.println("Pegasus, for one");
         System.out.println("Lawn party locale");
-        
+        // Hints Down Testing
         System.out.println("Down");
         System.out.println("Full of moxie");
         System.out.println(" \"Sweet love\" singer Baker");
