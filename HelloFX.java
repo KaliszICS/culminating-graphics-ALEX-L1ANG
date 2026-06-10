@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -77,12 +78,17 @@ public class HelloFX extends Application {
         Label gameTitle = new Label("Solve the Puzzle!");
         gameTitle.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
+        // Game Result Title
+        Label gameResultLabel = new Label("Fill in the board to reveal your result.");
+        gameResultLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #34495E;");
+
         // Grid Layout
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER); // Centering grid position
         grid.setHgap(5); // Horizontal width of gaps between columns
         grid.setVgap(5); // Vertical width of gaps between rows
 
+        // Creating Individual Boxes For Grid
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
                 TextField box = new TextField();
@@ -96,6 +102,40 @@ public class HelloFX extends Application {
             }
         }
 
+        // Player Board to Game Board Comparison (Win Checking)
+        Button checkButton = new Button("Check Answer");
+        checkButton.setStyle("-fx-font-size: 14px; -fx-padding: 8px 15px;");
+
+        checkButton.setOnAction(e -> {
+            boolean win = true;
+
+            for (int i = 0; i < gameSize; i++) { // Looping x values (row)
+                for (int j = 0; j < gameSize; j++) { // Looping y values (column)
+                    String text = playerInputs[i][j].getText(); // Fetches player's input
+                    char playerLetter = ' '; // Converts to character
+
+                    if (!text.isEmpty()) {
+                        // Take the first character and ensure it's uppercase
+                        playerLetter = text.toUpperCase().charAt(0);
+                    }
+
+                    // Comparing player's board to game's board
+                    if (playerLetter != gameBoard[i][j]) {
+                        win = false; // Player board does not match preset, else win stays true
+                    }
+                }
+            }
+
+            if (win) {
+                gameResultLabel.setText("Congratulations, you've beaten the Mini Crossword!");
+                gameResultLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #27AE60; -fx-font-weight: bold;");
+            } else {
+                gameResultLabel.setText("Sorry, some letters are incorrect.");
+                gameResultLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #C0392B; -fx-font-weight: bold;");
+            }
+        });
+
+        // Return to Menu
         Button backButton = new Button("Back to Menu"); // Back to menu button 
         backButton.setOnAction(e -> start(stage)); // Functionality of back to menu button
 
