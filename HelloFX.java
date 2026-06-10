@@ -11,7 +11,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -96,6 +95,15 @@ public class HelloFX extends Application {
                 box.setPrefHeight(45);
                 box.setAlignment(Pos.CENTER);
                 box.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+                
+                // Listener to limit each box to one UPPERCASED character
+                box.textProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.length() > 1) {
+                        box.setText(oldValue); // Reject the new input and revert to the single letter
+                    } else if (!newValue.isEmpty() && !newValue.equals(newValue.toUpperCase())) { // Detecting for lack of input
+                box.setText(newValue.toUpperCase()); // Forces all inputs to be uppercased
+                    }
+                });
 
                 playerInputs[i][j] = box;
                 grid.add(box, j, i);
@@ -107,11 +115,11 @@ public class HelloFX extends Application {
         checkButton.setStyle("-fx-font-size: 14px; -fx-padding: 8px 15px;");
 
         checkButton.setOnAction(e -> {
-            boolean win = true;
+            boolean win = true; // Setting win as true, then detecting mistakes --> set win to false
 
             for (int i = 0; i < gameSize; i++) { // Looping x values (row)
                 for (int j = 0; j < gameSize; j++) { // Looping y values (column)
-                    String text = playerInputs[i][j].getText(); // Fetches player's input
+                    String text = playerInputs[i][j].getText().trim(); // Fetches player's input, removes additional spaces
                     char playerLetter = ' '; // Converts to character
 
                     if (!text.isEmpty()) {
@@ -139,7 +147,7 @@ public class HelloFX extends Application {
         Button backButton = new Button("Back to Menu"); // Back to menu button 
         backButton.setOnAction(e -> start(stage)); // Functionality of back to menu button
 
-        gameLayout.getChildren().addAll(gameTitle, grid, backButton);
+        gameLayout.getChildren().addAll(gameTitle, grid, checkButton, gameResultLabel, backButton);
 
         Scene gameScene = new Scene(gameLayout, 640, 480);
         stage.setScene(gameScene);
