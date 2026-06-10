@@ -4,7 +4,7 @@ GUAFF
 UNTIL
 TITLE
 STEED
-YARD#
+YARD.
 American tennis player Coco, winner of the 2025 French Open
 No later than
 Prizefighter's quest
@@ -15,8 +15,8 @@ Full of moxie
 This is _____ nonsense!
 Submitted a tax return
 Skipped town in a hurry
-ELF##
-LALA#
+ELF..
+LALA.
 VUONG
 IRATE
 SATED
@@ -34,7 +34,7 @@ CASTS
 UPTOP
 BRUNO
 AIDED
-#LYRE
+.LYRE
 Broken limb stabilizers
 “Gimme five!”
 Mars on Earth?
@@ -64,7 +64,7 @@ To date
 STENO
 MEANS
 UPSET
-GHEE#
+GHEE.
 Close a door with force
 Courtroom worker, briefly
 House Ways and ___ Committee
