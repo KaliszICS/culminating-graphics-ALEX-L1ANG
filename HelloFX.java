@@ -16,6 +16,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+// Text File Imports (For The Crossword Presets)
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class HelloFX extends Application {
 
     // Game Board Test
