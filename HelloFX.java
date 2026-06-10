@@ -204,14 +204,14 @@ public class HelloFX extends Application {
                     box.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-background-color: #FFFFFF; -fx-border-color: #BDC3C7;");
                 
                 // Listener to limit each box to one UPPERCASED character
-                box.textProperty().addListener((observable, oldValue, newValue) -> {
-                    if (newValue.length() > 1) {
-                        box.setText(oldValue); // Reject the new input and revert to the single letter
-                    } else if (!newValue.isEmpty() && !newValue.equals(newValue.toUpperCase())) { // Detecting for lack of input
-                box.setText(newValue.toUpperCase()); // Forces all inputs to be uppercased
-                    }
-                });
-            }
+                    box.textProperty().addListener((observable, oldValue, newValue) -> {
+                        if (newValue.length() > 1) {
+                            box.setText(oldValue); // Reject the new input and revert to the single letter
+                        } else if (!newValue.isEmpty() && !newValue.equals(newValue.toUpperCase())) { // Detecting for lack of input
+                            box.setText(newValue.toUpperCase()); // Forces all inputs to be uppercased
+                        }
+                    });
+                }
                 playerInputs[i][j] = box;
                 grid.add(box, j, i);
             }
@@ -262,6 +262,7 @@ public class HelloFX extends Application {
 
         Scene gameScene = new Scene(gameLayout, 650, 525);
         stage.setScene(gameScene);
+        stage.show();
     }
 
     public static void main(String[] args) {
