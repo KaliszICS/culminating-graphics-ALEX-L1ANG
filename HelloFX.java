@@ -7,9 +7,11 @@ Date Last Modified: June 1, 2026
 
 // Design imports
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 // Code imports
@@ -19,52 +21,44 @@ public class HelloFX extends Application {
 
     @Override
     public void start(Stage stage) {
-        // Graphic Design
-        Label l = new Label("test");
-        Scene scene = new Scene(new StackPane(l), 640, 480);
-
-        // Game Functions 
-        // Insert Game Function Here (Choose game)
-        // Insert Board Checker/Progress Function Here
+        // Title & Subtitle Designs
+        Label titleLabel = new Label("MINI CROSSWORD");
+        titleLabel.setStyle("-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;");
         
-        // Game Board
-        char[][] gameBoard = {
-            {'G', 'U', 'A', 'F', 'F'},
-            {'U', 'N', 'T', 'I', 'L'},
-            {'T', 'I', 'T', 'L', 'E'},
-            {'S', 'T', 'E', 'E', 'D'},
-            {'Y', 'A', 'R', 'D', '#'}
-        };
+        Label subtitleLabel = new Label("A simple and compact puzzle to test your knowledge!");
+        subtitleLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #7F8C8D;");
 
-        // Player Board
-        char[][] playerBoard = {
-            {' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' '}
-        };
+        // Menu Buttons & Design
+        Button startButton = new Button("Play Crossword");
+        Button exitButton = new Button("Exit Game");
 
-        // Hints Across Testing1
-        System.out.println("Across");
-        System.out.println("American tennis player Coco, winner of the 2025 French Open");
-        System.out.println("No later than");
-        System.out.println("Prizefighter's quest");
-        System.out.println("Pegasus, for one");
-        System.out.println("Lawn party locale");
-        // Hints Down Testing1
-        System.out.println("Down");
-        System.out.println("Full of moxie");
-        System.out.println(" \"Sweet love\" singer Baker");
-        System.out.println("This is _____ nonsense!");
-        System.out.println("Submitted a tax return");
-        System.out.println("Skipped town in a hurry");
+        String menuButtonStyle = "-fx-font-size: 16px; -fx-padding: 10px 20px; -fx-min-width: 150px;";
+        startButton.setStyle(menuButtonStyle);
+        exitButton.setStyle(menuButtonStyle);
 
+        startButton.setOnAction(e -> {
+            showGameBoardScene(stage); // Change Menu to Game Screen via. method (in the works)
+            System.out.println("Starting Game: Generating Random Crossword Puzzle");
+        });
+        
+        exitButton.setOnAction(e -> {
+            stage.close(); // Close Application via. button
+        });
+
+        VBox menuLayout = new VBox(20); 
+        menuLayout.setAlignment(Pos.CENTER);
+        menuLayout.setStyle("-fx-background-color: #ECF0F1;");
+
+        menuLayout.getChildren().addAll(titleLabel, subtitleLabel, startButton, exitButton);
+
+        Scene scene = new Scene(menuLayout, 640, 480);
         stage.setScene(scene);
+        stage.setTitle("Crossword Game - Main Menu");
         stage.show();
     }
 
     public static void main(String[] args) {
+
         launch();
     }
 
