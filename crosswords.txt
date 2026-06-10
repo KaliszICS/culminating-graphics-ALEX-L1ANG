@@ -1,5 +1,4 @@
-Plaintext
-
+5
 GUAFF
 UNTIL
 TITLE

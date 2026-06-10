@@ -16,41 +16,47 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 // Text File Imports (For The Crossword Presets)
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Random;
+import java.util.Scanner;
 
 public class HelloFX extends Application {
 
     // Game Size Setting (5x5 Crossword)
-    int gameSize = 5;
-    
-    // Array Lists to store my presets from my text file (crosswords.txt)
-    ArrayList<char[][]> allGameBoards = new ArrayList<>();
-    ArrayList<String[]> allAcrossClues = new ArrayList<>();
-    ArrayList<String[]> allDownClues = new ArrayList<>();
+    final int gameSize = 5;
 
-    // State trackers keeping track of the actively loaded puzzle parameters
+    // Storing game asset arrays
     char[][] gameBoard;
     String[] acrossClues = new String[5]; // Stores the 5 row clues for the given crossword puzzle
     String[] downClues = new String[5];   // Same thing as above but for the columns
     TextField[][] playerInputs = new TextField[5][5]; // UI framework
 
+    Scanner input = null;
+
     @Override
     public void start(Stage stage) {
+        File crosswords = new File("crosswords.txt");
+        try {
+            input = new Scanner(crosswords);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }  
 
         // Loading text file (crosswords.txt) for the game
         loadPuzzlesFromFile();
 
         // Title & Subtitle Designs
         Label titleLabel = new Label("MINI CROSSWORD");
-        titleLabel.setStyle("-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;");
+        titleLabel.setFont(new Font("Arial", 32));
         
         Label subtitleLabel = new Label("A simple and compact puzzle to test your knowledge!");
-        subtitleLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #7F8C8D;");
+        subtitleLabel.setFont(new Font("Arial", 32));
 
         // Menu Buttons & Design
         Button startButton = new Button("Play Crossword");
@@ -60,21 +66,9 @@ public class HelloFX extends Application {
         startButton.setStyle(menuButtonStyle);
         exitButton.setStyle(menuButtonStyle);
 
+              
+
         startButton.setOnAction(e -> {
-            if (!allGameBoards.isEmpty()) { // Detects if there is a crossword puzzle to being with
-                // Takes a random crossword based on index
-                int randomIndex = (int) (Math.random() * allGameBoards.size());
-                
-                // Retrieving the puzzle, and the clues for the selected crossword puzzle
-                gameBoard = allGameBoards.get(randomIndex);
-                acrossClues = allAcrossClues.get(randomIndex);
-                downClues = allDownClues.get(randomIndex);
-                
-                System.out.println("Starting Game: Randomly Generated Crossword Puzzle");
-            } else {
-                System.out.println("No puzzles loaded.");
-            }
-            
             showGameBoardScene(stage); // Change Menu to Game Screen via. method
         });
         
@@ -84,7 +78,6 @@ public class HelloFX extends Application {
 
         VBox menuLayout = new VBox(20); 
         menuLayout.setAlignment(Pos.CENTER);
-        menuLayout.setStyle("-fx-background-color: #ECF0F1;");
 
         menuLayout.getChildren().addAll(titleLabel, subtitleLabel, startButton, exitButton);
 
@@ -96,53 +89,57 @@ public class HelloFX extends Application {
 
     // Method to take 15 lines for a crossword (board, row and column clues) from the file
     public void loadPuzzlesFromFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader("crosswords.txt"))) {
             String line;
-            
+            int number = input.nextInt();
+            Random random = new Random();
+            input.nextLine();
+            int lineSkips = (15 * random.nextInt(5));
+            System.out.println(lineS)
+            for (int i = 0; i < lineSkips; i++) {
+                System.out.println(input.nextLine())
+                ;
+            }
+
+
             // Loop through blocks of 15 lines as long as complete records exist
-            while ((line = br.readLine()) != null) {
-                char[][] board = new char[5][5];
-                
-                // Takes the first row of the crossword (using index 0) for a crossroad preset
-                board[0] = line.toCharArray();
+                char[][] board = new char[gameSize][gameSize];
                 
                 // Grabbing rows 2-5 of that same crossword (using index 1-4) for a crossword preset
-                for (int i = 1; i < 5; i++) {
-                    board[i] = br.readLine().toCharArray();
+                for (int i = 0; i < 5; i++) {
+                    String nextString = input.nextLine();
+
+                    for (int j = 0; j < 5; j++) {
+                        board[i][j] = nextString.charAt(j);
+                    }
                 }
                 
                 // Looping 5 times to fetch ROW hints for randomized crossword
                 String[] across = new String[5];
                 for (int i = 0; i < 5; i++) {
-                    across[i] = br.readLine();
+                    across[i] = input.nextLine();
                 }
                 
                 // Looping 5 times to fetch COLUMN hints for randomized crossword
                 String[] down = new String[5];
                 for (int i = 0; i < 5; i++) {
-                    down[i] = br.readLine();
+                    down[i] = input.nextLine();
                 }
                 
                 // Sorts the board, row & column clues into lists
-                allGameBoards.add(board);
-                allAcrossClues.add(across);
-                allDownClues.add(down);
-            }
-            System.out.println("Successfully loaded puzzle"); // Confirmation that it worked (testing my file)
-        } catch (IOException e) { // Fixing issue where my code would crash (file alignment was wrong?)
-            System.out.println("Apologies, there was an error fetching crossword puzzle from text file.");
-        }
+                gameBoard = board;
+                acrossClues = across;
+                downClues = down;
+            
     }
 
     // Method to switch from menu to game screen (refer to line 41)
     public void showGameBoardScene(Stage stage) {
         VBox gameLayout = new VBox(20);
         gameLayout.setAlignment(Pos.CENTER);
-        gameLayout.setStyle("-fx-background-color: #ECF0F1;");
 
         // Designing Game Title
         Label gameTitle = new Label("Solve the Puzzle!");
-        gameTitle.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        gameTitle.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 
         HBox cluesContainer = new HBox(40);
         cluesContainer.setAlignment(Pos.CENTER);
@@ -150,26 +147,26 @@ public class HelloFX extends Application {
         // Pulling Row Clues (across)
         VBox acrossBox = new VBox(3);
         Label acrossTitle = new Label("ACROSS");
-        acrossTitle.setStyle("-fx-font-weight: bold; -fx-text-fill: #2980B9; -fx-font-size: 14px;");
+        acrossTitle.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         acrossBox.getChildren().add(acrossTitle);
         
         for (int i = 0; i < 5; i++) {
             // Takes clues from the array list for row clues (across)
             Label clue = new Label((i + 1) + ". " + acrossClues[i]);
-            clue.setStyle("-fx-font-size: 11px; -fx-text-fill: #2C3E50;");
+            clue.setFont(new Font("Arial", 11));
             acrossBox.getChildren().add(clue);
         }
 
         // Pulling Column Clues (down)
         VBox downBox = new VBox(3);
         Label downTitle = new Label("DOWN");
-        downTitle.setStyle("-fx-font-weight: bold; -fx-text-fill: #8E44AD; -fx-font-size: 14px;");
+        downTitle.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         downBox.getChildren().add(downTitle);
         
         for (int i = 0; i < 5; i++) {
             // Takes clues from the array list for column clues (down)
             Label clue = new Label((i + 1) + ". " + downClues[i]);
-            clue.setStyle("-fx-font-size: 11px; -fx-text-fill: #2C3E50;");
+            clue.setFont(new Font("Arial", 11));
             downBox.getChildren().add(clue);
         }
 
@@ -177,7 +174,7 @@ public class HelloFX extends Application {
 
         // Game Result Title
         Label gameResultLabel = new Label("Fill in the board to reveal your result.");
-        gameResultLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #34495E;");
+        gameResultLabel.setFont(new Font("Arial", 11));
 
         // Grid Layout
         GridPane grid = new GridPane();
@@ -192,10 +189,10 @@ public class HelloFX extends Application {
                 box.setPrefWidth(45);
                 box.setPrefHeight(45);
                 box.setAlignment(Pos.CENTER);
-                box.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+                box.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
                 // Designing black tiles --> null = empty, . = black tile symbol
-                if (gameBoard != null && gameBoard[i][j] == '.') {
+                if (gameBoard[i][j] == '.') {
                     box.setEditable(false);   
                     box.setFocusTraversable(false); 
                     box.setStyle("-fx-background-color: #2C3E50; -fx-border-color: #2C3E50;"); 
@@ -230,7 +227,7 @@ public class HelloFX extends Application {
                     char playerLetter = ' '; // Converts to character
 
                     // Validation 
-                    if (gameBoard != null && gameBoard[i][j] == '.') { // If tile is not blank & is a black tile...
+                    if (gameBoard[i][j] == '.') { // If tile is not blank & is a black tile...
                         if (!text.isEmpty()) {
                             win = false; // Checking that black tiles remain blank/untouched
                         }
@@ -238,7 +235,7 @@ public class HelloFX extends Application {
                         if (!text.isEmpty()) {
                             playerLetter = text.toUpperCase().charAt(0);
                         }
-                        if (gameBoard == null || playerLetter != gameBoard[i][j]) {
+                        if (playerLetter != gameBoard[i][j]) {
                             win = false; 
                         }
                     }
