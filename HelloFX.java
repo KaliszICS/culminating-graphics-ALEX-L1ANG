@@ -43,9 +43,10 @@ public class HelloFX extends Application {
         File crosswords = new File("crosswords.txt");
         try {
             input = new Scanner(crosswords);
-        } catch (FileNotFoundException e) {
+        // Added because my code would literally not run without it (crashes)
+        } catch (FileNotFoundException error) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            error.printStackTrace();
         }  
 
         // Loading text file (crosswords.txt) for the game
@@ -76,6 +77,7 @@ public class HelloFX extends Application {
             stage.close(); // Close Application via. button
         });
 
+        // Layout design
         VBox menuLayout = new VBox(20); 
         menuLayout.setAlignment(Pos.CENTER);
 
@@ -99,7 +101,7 @@ public class HelloFX extends Application {
             // Loop through blocks of 15 lines as long as complete records exist
                 char[][] board = new char[gameSize][gameSize];
                 
-                // Grabbing rows 2-5 of that same crossword (using index 1-4) for a crossword preset
+                // Grabbing rows 1-5 of that same crossword (using index 0-4) for a crossword preset
                 for (int i = 0; i < 5; i++) {
                     String nextString = input.nextLine();
 
@@ -136,6 +138,7 @@ public class HelloFX extends Application {
         Label gameTitle = new Label("Solve the Puzzle!");
         gameTitle.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 
+        // Centering clues to be above crossword puzzle
         HBox cluesContainer = new HBox(40);
         cluesContainer.setAlignment(Pos.CENTER);
 
@@ -237,6 +240,7 @@ public class HelloFX extends Application {
                 }
             }
 
+            // Printing completion and incompletion messages (green = win, red = not finished)
             if (win) {
                 gameResultLabel.setText("Congratulations, you've beaten the Mini Crossword!");
                 gameResultLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #27AE60; -fx-font-weight: bold;");
@@ -250,6 +254,7 @@ public class HelloFX extends Application {
         Button backButton = new Button("Back to Menu"); // Back to menu button 
         backButton.setOnAction(e -> start(stage)); // Functionality of back to menu button
 
+        // Setting the entire board (display)
         gameLayout.getChildren().addAll(gameTitle, cluesContainer, grid, checkButton, gameResultLabel, backButton);
 
         Scene gameScene = new Scene(gameLayout, 650, 525);
