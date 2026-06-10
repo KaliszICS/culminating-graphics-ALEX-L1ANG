@@ -55,7 +55,7 @@ public class HelloFX extends Application {
         Label titleLabel = new Label("MINI CROSSWORD");
         titleLabel.setFont(new Font("Arial", 32));
         
-        Label subtitleLabel = new Label("A simple and compact puzzle to test your knowledge!");
+        Label subtitleLabel = new Label("A quick and fun puzzle");
         subtitleLabel.setFont(new Font("Arial", 32));
 
         // Menu Buttons & Design
@@ -89,15 +89,10 @@ public class HelloFX extends Application {
 
     // Method to take 15 lines for a crossword (board, row and column clues) from the file
     public void loadPuzzlesFromFile() {
-            String line;
-            int number = input.nextInt();
             Random random = new Random();
             input.nextLine();
             int lineSkips = (15 * random.nextInt(5));
-            System.out.println(lineS)
             for (int i = 0; i < lineSkips; i++) {
-                System.out.println(input.nextLine())
-                ;
             }
 
 
