@@ -22,6 +22,7 @@ import javafx.scene.text.FontWeight;
 // Text File Imports (For The Crossword Presets)
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -36,7 +37,13 @@ public class HelloFX extends Application {
     String[] downClues = new String[5];   // Same thing as above but for the columns
     TextField[][] playerInputs = new TextField[5][5]; // UI framework
 
+    // Emptying scanner
     Scanner input = null;
+
+    // Creating array lists to append text file assets into the board later
+    ArrayList<char[][]> boardList = new ArrayList<>();
+    ArrayList<String[]> acrossClueList = new ArrayList<>();
+    ArrayList<String[]> downClueList = new ArrayList<>();
 
     @Override
     public void start(Stage stage) {
@@ -51,7 +58,12 @@ public class HelloFX extends Application {
 
         // Loading text file (crosswords.txt) for the game
         loadPuzzlesFromFile();
-
+        Random random = new Random();
+        // Taking clues & board preset from text file (crosswords.txt)
+        gameBoard = boardList.get(random.nextInt(5));
+        acrossClues = acrossClueList.get(random.nextInt(5));
+        downClues = downClueList.get(random.nextInt(5));
+        
         // Title & Subtitle Designs
         Label titleLabel = new Label("MINI CROSSWORD");
         titleLabel.setFont(new Font("Arial", 32));
@@ -91,12 +103,11 @@ public class HelloFX extends Application {
 
     // Method to take 15 lines for a crossword (board, row and column clues) from the file
     public void loadPuzzlesFromFile() {
-            Random random = new Random();
-            input.nextLine();
-            int lineSkips = (15 * random.nextInt(5));
-            for (int i = 0; i < lineSkips; i++) {
-            }
+        int numberOfCrosswords = input.nextInt();    
+        input.nextLine();
 
+        // Loops each crossword for input
+        for (int k = 0; k < numberOfCrosswords; k++) {
 
             // Loop through blocks of 15 lines as long as complete records exist
                 char[][] board = new char[gameSize][gameSize];
@@ -122,11 +133,11 @@ public class HelloFX extends Application {
                     down[i] = input.nextLine();
                 }
                 
-                // Sorts the board, row & column clues into lists
-                gameBoard = board;
-                acrossClues = across;
-                downClues = down;
-            
+                // Adding the arrays to the array list
+                boardList.add(board);
+                acrossClueList.add(across);
+                downClueList.add(down);
+        }
     }
 
     // Method to switch from menu to game screen (refer to line 41)
