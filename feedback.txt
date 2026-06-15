@@ -1,0 +1,27 @@
+K(30%): 100
+I(30%): 90
+C(10%): 100
+A(30%): 90
+94%
+
+GUAFF should be GAUFF and is spelled wrong in your text file.
+
+"
+gameBoard = boardList.get(random.nextInt(5));
+acrossClues = acrossClueList.get(random.nextInt(5));
+downClues = downClueList.get(random.nextInt(5));
+"
+These should all be using the same random number.  Not recalculating it for each one.
+
+#SLAM
+STENO
+MEANS
+UPSET
+GHEE.
+
+# should be a .  This causes your whole crossword to be off.
+
+Avoid using random numbers.  If you want to use the number 5 becuase it is number of clues in the row/column, make it so that number can be part of the file and be dynamic instead of stuck on 5.
+Same with text sizes that are used in multiple places or anything like that.  Make them variables so they can be easily edited.
+
+In the future I would add more ease of use actions (arrow keys to move around, typing a letter automatically goes to the next instead of having to click tab, space to change direction of text typing, highlight direction you're typing etc.)
